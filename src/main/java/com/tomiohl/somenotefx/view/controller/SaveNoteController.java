@@ -50,7 +50,7 @@ public class SaveNoteController implements Initializable {
     @FXML
     private void save(ActionEvent event) {
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(Paths.get(chosenPath, nameField.getText() + ".txt").toString()),
+                new FileOutputStream(Paths.get(chosenPath, nameField.getText()).toString()),
                 StandardCharsets.UTF_8))) {
             writer.write(noteTextArea.getText());
         } catch (IOException e) {

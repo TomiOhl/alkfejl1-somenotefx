@@ -56,7 +56,7 @@ public class NoteDaoImpl implements NoteDAO {
     }
 
     @Override
-    public boolean delete(Note n) {
+    public boolean deleteFromRecents(Note n) {
         try (Connection conn = DriverManager.getConnection(DB_STRING); PreparedStatement st = conn.prepareStatement(DELETE_RECENT)) {
             st.setString(1, Integer.toString(n.getId()));
             int res = st.executeUpdate();

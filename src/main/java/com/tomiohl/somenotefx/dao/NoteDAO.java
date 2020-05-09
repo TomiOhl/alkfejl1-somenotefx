@@ -9,7 +9,7 @@ public interface NoteDAO {
 
     boolean add(Note n);
 
-    boolean delete(Note n);
+    boolean deleteFromRecents(Note n);
 
     String open(File file);
 

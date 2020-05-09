@@ -1,5 +1,6 @@
 package com.tomiohl.somenotefx.view.controller;
 
+import com.tomiohl.somenotefx.App;
 import com.tomiohl.somenotefx.model.Note;
 import com.tomiohl.somenotefx.controller.NoteController;
 import com.tomiohl.somenotefx.utils.Utils;
@@ -14,7 +15,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.net.URL;
+import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -76,7 +79,7 @@ public class RecentsDialogController implements Initializable {
                     Optional<ButtonType> result = alert.showAndWait();
                     result.ifPresent(buttonType -> {
                         if (buttonType == ButtonType.YES) {
-                            boolean success = NoteController.getInstance().delete(n);
+                            boolean success = NoteController.getInstance().deleteFromRecents(n);
                             refreshTable();
                             if (!success)
                                 Utils.showWarning("Nem sikerült a törlés");
@@ -96,6 +99,18 @@ public class RecentsDialogController implements Initializable {
             }
 
         });
+
+        table.setOnMouseClicked(event -> {
+            Note note = table.getSelectionModel().getSelectedItem();
+            if (note != null) {
+                File f = new File(Path.of(note.getFilePath(), note.getFilename()).toString());
+                TextArea noteTextArea = (TextArea) App.getMainStage().getScene().lookup("#noteTextArea");
+                noteTextArea.setText(NoteController.getInstance().open(f));
+                Stage stage = (Stage) table.getScene().getWindow();
+                stage.close();
+            }
+        });
+
     }
 
 }

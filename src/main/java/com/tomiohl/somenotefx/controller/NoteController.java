@@ -27,8 +27,8 @@ public class NoteController {
         return dao.add(note);
     }
 
-    public boolean delete(Note note) {
-        return dao.delete(note);
+    public boolean deleteFromRecents(Note note) {
+        return dao.deleteFromRecents(note);
     }
 
     public String open(File file) {

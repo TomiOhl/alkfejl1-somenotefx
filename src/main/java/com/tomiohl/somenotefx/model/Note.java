@@ -2,7 +2,9 @@ package com.tomiohl.somenotefx.model;
 
 import javafx.beans.property.*;
 
-public class Note {
+import java.io.Serializable;
+
+public class Note implements Serializable {
 
     private IntegerProperty id = new SimpleIntegerProperty();
     private StringProperty filename = new SimpleStringProperty();

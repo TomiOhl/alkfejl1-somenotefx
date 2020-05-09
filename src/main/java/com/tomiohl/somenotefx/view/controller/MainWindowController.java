@@ -31,6 +31,7 @@ public class MainWindowController implements Initializable {
 
     @FXML
     public void addNote(){
+        // mentés másként dialógus
         Parent root;
         try {
             root = FXMLLoader.load(getClass().getResource("/com/tomiohl/somenotefx/view/save_dialog.fxml"));
@@ -82,7 +83,7 @@ public class MainWindowController implements Initializable {
             noteTextArea.setText(NoteController.getInstance().open(selectedFile));
             // létrehozunk egy Note objektumot, amit majd a mentésnél használhatunk
             Path path = Paths.get(selectedFile.getAbsolutePath());
-            currentNote = new Note(selectedFile.getName(), path.getParent().toString());
+            setCurrentNote(new Note(selectedFile.getName(), path.getParent().toString()));
         } else {
             Utils.showWarning("Nem választott fájlt");
         }
@@ -95,4 +96,11 @@ public class MainWindowController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
+    public Note getCurrentNote() {
+        return currentNote;
+    }
+
+    public void setCurrentNote(Note currentNote) {
+        this.currentNote = currentNote;
+    }
 }
