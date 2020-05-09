@@ -35,6 +35,10 @@ public class NoteController {
         return dao.open(file);
     }
 
+    public boolean save(Note note) {
+        return dao.save(note);
+    }
+
     public List<Note> getAll() {
         return dao.getAll();
     }

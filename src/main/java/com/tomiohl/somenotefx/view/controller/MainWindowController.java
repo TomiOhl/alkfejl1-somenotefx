@@ -30,7 +30,22 @@ public class MainWindowController implements Initializable {
     private TextArea noteTextArea;
 
     @FXML
-    public void addNote(){
+    public void saveNote() {
+        if (getCurrentNote() != null) {
+            currentNote.setSaveDate(System.currentTimeMillis());
+            if (NoteController.getInstance().save(getCurrentNote())) {
+                // sikerült menteni a fájlt
+                System.out.println(currentNote);
+            } else {
+                Utils.showWarning("A mentés nem sikerült");
+            }
+        } else {
+            // TODO
+        }
+    }
+
+    @FXML
+    public void saveNoteAs(){
         // mentés másként dialógus
         Parent root;
         try {
@@ -59,6 +74,7 @@ public class MainWindowController implements Initializable {
             stage.setTitle("Legutóbbiak");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
+            // TODO: visszakérni a currentNote-ot
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -88,6 +88,12 @@ public class NoteDaoImpl implements NoteDAO {
     }
 
     @Override
+    public boolean save(Note note) {
+        // TODO: check if letezik a note az adatbazisban, ez alapjan insert vagy update
+        return false;
+    }
+
+    @Override
     public List<Note> getAll() {
         List<Note> result = new ArrayList<>();
 

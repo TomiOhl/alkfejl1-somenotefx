@@ -16,8 +16,8 @@
                 <Menu mnemonicParsing="false" text="Létrehozás" />
                 <Menu mnemonicParsing="false" text="Mentés">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Mentés" />
-                        <MenuItem mnemonicParsing="false" onAction="#addNote" text="Mentés másként..." />
+                        <MenuItem mnemonicParsing="false" onAction="#saveNote" text="Mentés" />
+                        <MenuItem mnemonicParsing="false" onAction="#saveNoteAs" text="Mentés másként..." />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Előnézet" />

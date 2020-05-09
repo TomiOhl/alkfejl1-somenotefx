@@ -13,5 +13,8 @@ public interface NoteDAO {
 
     String open(File file);
 
+    boolean save(Note note);
+
     List<Note> getAll();
+
 }
