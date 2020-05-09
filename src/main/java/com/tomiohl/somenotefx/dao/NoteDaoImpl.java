@@ -2,6 +2,10 @@ package com.tomiohl.somenotefx.dao;
 
 import com.tomiohl.somenotefx.model.Note;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +68,23 @@ public class NoteDaoImpl implements NoteDAO {
         }
 
         return false;
+    }
+
+    @Override
+    public String open(File file) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            StringBuilder builder = new StringBuilder();
+            String line = reader.readLine();
+            while (line != null) {
+                builder.append(line);
+                builder.append(System.lineSeparator());
+                line = reader.readLine();
+            }
+            return builder.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.tomiohl.somenotefx.dao.NoteDAO;
 import com.tomiohl.somenotefx.dao.NoteDaoImpl;
 import com.tomiohl.somenotefx.model.Note;
 
+import java.io.File;
 import java.util.List;
 
 public class NoteController {
@@ -28,6 +29,10 @@ public class NoteController {
 
     public boolean delete(Note note) {
         return dao.delete(note);
+    }
+
+    public String open(File file) {
+        return dao.open(file);
     }
 
     public List<Note> getAll() {
