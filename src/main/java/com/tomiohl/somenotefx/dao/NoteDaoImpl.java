@@ -25,6 +25,10 @@ public class NoteDaoImpl implements NoteDAO {
 
     private static final String SELECT_RECENT = "SELECT * FROM Recents;";
 
+    private static final String SAVE_CHECK_EXISTENCE = "SELECT id FROM Recents WHERE filename = ? AND filepath = ?;";
+
+    private static final String SAVE_EXISTING = "UPDATE Recents SET savedate = ? WHERE id = ?;";
+
     public void initializeTables() {
         try (Connection conn = DriverManager.getConnection(DB_STRING); Statement st = conn.createStatement()) {
             st.executeUpdate(CREATE_RECENT);
@@ -89,7 +93,32 @@ public class NoteDaoImpl implements NoteDAO {
 
     @Override
     public boolean save(Note note) {
-        // TODO: check if letezik a note az adatbazisban, ez alapjan insert vagy update
+        // check if letezik a note az adatbazisban, ez alapjan insert vagy update
+        ResultSet rs;
+        int id = -1;    // ha letezik mar a parameterben kapott Note, akkor ez felulirodik
+        try (Connection conn = DriverManager.getConnection(DB_STRING); PreparedStatement st = conn.prepareStatement(SAVE_CHECK_EXISTENCE)) {
+            st.setString(1, note.getFilename());
+            st.setString(2, note.getFilePath());
+            rs = st.executeQuery();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+            if (id == -1) {
+                // nincs note az adatbazisban, insert
+                return add(note);
+            } else {
+                // van ilyen note, update savedate
+                PreparedStatement upDate = conn.prepareStatement(SAVE_EXISTING);
+                upDate.setLong(1, note.getSaveDate());
+                upDate.setInt(2, id);
+                int res = upDate.executeUpdate();
+                if (res == 1) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 

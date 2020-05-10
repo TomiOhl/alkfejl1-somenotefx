@@ -35,12 +35,13 @@ public class MainWindowController implements Initializable {
             currentNote.setSaveDate(System.currentTimeMillis());
             if (NoteController.getInstance().save(getCurrentNote())) {
                 // sikerült menteni a fájlt
+                // TODO: eddig: sikerult menteni az adatbazisba, mentsuk a fajlt is
                 System.out.println(currentNote);
             } else {
                 Utils.showWarning("A mentés nem sikerült");
             }
         } else {
-            // TODO
+            // TODO: hozzunk letre uj objektumot aztan add es fajl mentese
         }
     }
 
