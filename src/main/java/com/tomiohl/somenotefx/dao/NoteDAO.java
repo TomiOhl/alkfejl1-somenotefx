@@ -15,6 +15,8 @@ public interface NoteDAO {
 
     boolean save(Note note);
 
+    boolean saveToStorage(String path, String content);
+
     List<Note> getAll();
 
 }

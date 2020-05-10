@@ -61,7 +61,7 @@ public class RecentsDialogController implements Initializable {
         dateCol.setCellValueFactory(saveDate -> {
             // mivel long, illetve unix időként van tárolva, át kell konvertálni
             StringProperty property = new SimpleStringProperty();
-            DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd.");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd. HH:mm:ss");
             property.setValue(dateFormat.format(saveDate.getValue().getSaveDate()));
             return property;
         });
@@ -103,9 +103,13 @@ public class RecentsDialogController implements Initializable {
         table.setOnMouseClicked(event -> {
             Note note = table.getSelectionModel().getSelectedItem();
             if (note != null) {
+                // beolvassuk a kiválasztott fájlt
                 File f = new File(Path.of(note.getFilePath(), note.getFilename()).toString());
                 TextArea noteTextArea = (TextArea) App.getMainStage().getScene().lookup("#noteTextArea");
                 noteTextArea.setText(NoteController.getInstance().open(f));
+                // beállítjuk a currentNote-ot a választottra
+                NoteController.getInstance().setCurrentNote(note);
+                // bezárjuk az ablakot
                 Stage stage = (Stage) table.getScene().getWindow();
                 stage.close();
             }

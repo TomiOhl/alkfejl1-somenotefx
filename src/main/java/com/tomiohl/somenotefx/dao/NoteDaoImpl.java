@@ -2,10 +2,8 @@ package com.tomiohl.somenotefx.dao;
 
 import com.tomiohl.somenotefx.model.Note;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -117,6 +115,19 @@ public class NoteDaoImpl implements NoteDAO {
                 }
             }
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean saveToStorage(String path, String content) {
+        try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(path),
+                StandardCharsets.UTF_8))) {
+            writer.write(content);
+            return true;
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return false;

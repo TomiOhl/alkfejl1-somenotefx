@@ -9,6 +9,7 @@ import java.util.List;
 
 public class NoteController {
 
+    private Note currentNote;
     private NoteDAO dao = new NoteDaoImpl();
     private static NoteController single_instance = null;
 
@@ -39,7 +40,19 @@ public class NoteController {
         return dao.save(note);
     }
 
+    public boolean saveToStorage(String path, String content) {
+        return dao.saveToStorage(path, content);
+    }
+
     public List<Note> getAll() {
         return dao.getAll();
+    }
+
+    public Note getCurrentNote() {
+        return currentNote;
+    }
+
+    public void setCurrentNote(Note currentNote) {
+        this.currentNote = currentNote;
     }
 }

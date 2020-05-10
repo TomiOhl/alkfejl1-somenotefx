@@ -24,24 +24,27 @@ import java.util.ResourceBundle;
 
 public class MainWindowController implements Initializable {
 
-    private Note currentNote;
-
     @FXML
     private TextArea noteTextArea;
 
     @FXML
     public void saveNote() {
-        if (getCurrentNote() != null) {
-            currentNote.setSaveDate(System.currentTimeMillis());
-            if (NoteController.getInstance().save(getCurrentNote())) {
-                // sikerült menteni a fájlt
-                // TODO: eddig: sikerult menteni az adatbazisba, mentsuk a fajlt is
+        Note currentNote = NoteController.getInstance().getCurrentNote();
+        if (currentNote != null) {
+            NoteController.getInstance().getCurrentNote().setSaveDate(System.currentTimeMillis());
+            if (NoteController.getInstance().save(currentNote)) {
+                // sikerült menteni az adatbázisba, mentsük a fájlt is
+                String path = Paths.get(currentNote.getFilePath(), currentNote.getFilename()).toString();
+                if (!NoteController.getInstance().saveToStorage(path, noteTextArea.getText())) {
+                    Utils.showWarning("Nem sikerült a mentés");
+                }
                 System.out.println(currentNote);
             } else {
                 Utils.showWarning("A mentés nem sikerült");
             }
         } else {
-            // TODO: hozzunk letre uj objektumot aztan add es fajl mentese
+            // uj jegyzetet kezdtünk, így kell neki nevet és helyet találni
+            saveNoteAs();
         }
     }
 
@@ -75,7 +78,6 @@ public class MainWindowController implements Initializable {
             stage.setTitle("Legutóbbiak");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
-            // TODO: visszakérni a currentNote-ot
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -100,7 +102,7 @@ public class MainWindowController implements Initializable {
             noteTextArea.setText(NoteController.getInstance().open(selectedFile));
             // létrehozunk egy Note objektumot, amit majd a mentésnél használhatunk
             Path path = Paths.get(selectedFile.getAbsolutePath());
-            setCurrentNote(new Note(selectedFile.getName(), path.getParent().toString()));
+            NoteController.getInstance().setCurrentNote(new Note(selectedFile.getName(), path.getParent().toString()));
         } else {
             Utils.showWarning("Nem választott fájlt");
         }
@@ -113,11 +115,4 @@ public class MainWindowController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-    public Note getCurrentNote() {
-        return currentNote;
-    }
-
-    public void setCurrentNote(Note currentNote) {
-        this.currentNote = currentNote;
-    }
 }

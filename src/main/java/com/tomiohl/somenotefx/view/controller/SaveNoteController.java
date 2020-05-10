@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
@@ -49,14 +48,14 @@ public class SaveNoteController implements Initializable {
 
     @FXML
     private void save(ActionEvent event) {
-        try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(Paths.get(chosenPath, nameField.getText()).toString()),
-                StandardCharsets.UTF_8))) {
-            writer.write(noteTextArea.getText());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         if (NoteController.getInstance().add(note)) {
+            // ha mentettük az adatbázisba, mentsűk má' a tárhelyre is
+            String path = Paths.get(chosenPath, nameField.getText()).toString();
+            if (NoteController.getInstance().saveToStorage(path, noteTextArea.getText())) {
+                Utils.showSuccess("A mentés sikeres");
+            } else {
+                Utils.showWarning("Nem sikerült a mentés");
+            }
             Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             stage.close();
         } else {

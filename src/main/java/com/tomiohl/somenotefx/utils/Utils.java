@@ -10,4 +10,12 @@ public class Utils {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    public static void showSuccess(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("A művelet sikeresen teljesítve");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }
