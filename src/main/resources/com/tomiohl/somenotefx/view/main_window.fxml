@@ -3,26 +3,22 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tomiohl.somenotefx.view.controller.MainWindowController">
-    <children>
-        <MenuBar layoutY="2.0" prefHeight="32.0">
-            <menus>
-                <Menu mnemonicParsing="false" text="Megnyitás">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#openFile" text="Fájl megnyitása..." />
-                        <MenuItem mnemonicParsing="false" onAction="#openRecents" text="Legutóbbiak..." />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Létrehozás" />
-                <Menu mnemonicParsing="false" text="Mentés">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#saveNote" text="Mentés" />
-                        <MenuItem mnemonicParsing="false" onAction="#saveNoteAs" text="Mentés másként..." />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Előnézet" />
-            </menus>
-        </MenuBar>
-        <TextArea fx:id="noteTextArea" layoutY="32.0" prefHeight="568.0" prefWidth="800.0" />
-    </children>
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.tomiohl.somenotefx.view.controller.MainWindowController">
+    <MenuBar layoutY="2.0" prefHeight="32.0">
+        <Menu mnemonicParsing="false" text="Megnyitás">
+            <MenuItem mnemonicParsing="false" onAction="#openFile" text="Fájl megnyitása..."/>
+            <MenuItem mnemonicParsing="false" onAction="#openRecents" text="Legutóbbiak..."/>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Fájl">
+            <MenuItem mnemonicParsing="false" onAction="#newNote" text="Létrehozás"/>
+            <MenuItem mnemonicParsing="false" text="Előnézet"/>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Mentés">
+            <MenuItem mnemonicParsing="false" onAction="#saveNote" text="Mentés"/>
+            <MenuItem mnemonicParsing="false" onAction="#saveNoteAs" text="Mentés másként..."/>
+        </Menu>
+    </MenuBar>
+    <TextArea fx:id="noteTextArea" layoutY="32.0" prefHeight="568.0" prefWidth="800.0"/>
 </AnchorPane>

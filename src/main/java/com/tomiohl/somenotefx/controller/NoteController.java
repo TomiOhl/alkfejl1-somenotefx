@@ -17,7 +17,7 @@ public class NoteController {
 
     }
 
-    public static NoteController getInstance(){
+    public static NoteController getInstance(){     // nem feltétlen helyes, ha egyszerre tobbet akarunk szerkeszteni
         if(single_instance == null){
             single_instance = new NoteController();
         }

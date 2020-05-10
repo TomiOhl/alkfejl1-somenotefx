@@ -43,7 +43,7 @@ public class MainWindowController implements Initializable {
                 Utils.showWarning("A mentés nem sikerült");
             }
         } else {
-            // uj jegyzetet kezdtünk, így kell neki nevet és helyet találni
+            // új jegyzetet kezdtünk, így kell neki nevet és helyet találni
             saveNoteAs();
         }
     }
@@ -106,6 +106,12 @@ public class MainWindowController implements Initializable {
         } else {
             Utils.showWarning("Nem választott fájlt");
         }
+    }
+
+    @FXML
+    public void newNote(ActionEvent actionEvent) {
+        App app = new App();
+        app.start(new Stage());  // csakhogy a currentNote ugyanaz itt is, ott is
     }
 
     public MainWindowController() {

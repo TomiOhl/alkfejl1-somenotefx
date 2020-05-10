@@ -49,7 +49,8 @@ public class SaveNoteController implements Initializable {
     @FXML
     private void save(ActionEvent event) {
         if (NoteController.getInstance().add(note)) {
-            // ha mentettük az adatbázisba, mentsűk má' a tárhelyre is
+            // ha mentettük az adatbázisba, mentsűk má' a tárhelyre is, meg legyen ez a current
+            NoteController.getInstance().setCurrentNote(note);
             String path = Paths.get(chosenPath, nameField.getText()).toString();
             if (NoteController.getInstance().saveToStorage(path, noteTextArea.getText())) {
                 Utils.showSuccess("A mentés sikeres");
