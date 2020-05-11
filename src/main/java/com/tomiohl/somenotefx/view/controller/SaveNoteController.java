@@ -55,12 +55,12 @@ public class SaveNoteController implements Initializable {
             if (NoteController.getInstance().saveToStorage(path, noteTextArea.getText())) {
                 Utils.showSuccess("A mentés sikeres");
             } else {
-                Utils.showWarning("Nem sikerült a mentés");
+                Utils.showError("A mentés nem sikerült");
             }
             Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             stage.close();
         } else {
-            Utils.showWarning("Nem sikerült a mentés");
+            Utils.showError("A mentés nem sikerült");
         }
     }
 

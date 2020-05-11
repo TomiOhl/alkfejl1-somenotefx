@@ -59,10 +59,15 @@ public class RecentsDialogController implements Initializable {
 
         nameCol.setCellValueFactory(new PropertyValueFactory<>("filename"));
         dateCol.setCellValueFactory(saveDate -> {
+            long saveDateValue = saveDate.getValue().getSaveDate();
             // mivel long, illetve unix időként van tárolva, át kell konvertálni
             StringProperty property = new SimpleStringProperty();
-            DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd. HH:mm:ss");
-            property.setValue(dateFormat.format(saveDate.getValue().getSaveDate()));
+            if (saveDateValue == 0) {
+                property.setValue("Még nem mentette");   // itt jöttem rá, hogy létezik File.lastModified(), akkor nem kellett volna tárolni se a saveDate-et, de mostmár marad
+            } else {
+                DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd. HH:mm:ss");
+                property.setValue(dateFormat.format(saveDateValue));
+            }
             return property;
         });
 
@@ -82,7 +87,7 @@ public class RecentsDialogController implements Initializable {
                             boolean success = NoteController.getInstance().deleteFromRecents(n);
                             refreshTable();
                             if (!success)
-                                Utils.showWarning("Nem sikerült a törlés");
+                                Utils.showError("A törlés nem sikerült");
                         }
                     });
                 });

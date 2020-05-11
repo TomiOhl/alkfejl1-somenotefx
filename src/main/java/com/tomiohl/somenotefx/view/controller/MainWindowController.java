@@ -36,11 +36,11 @@ public class MainWindowController implements Initializable {
                 // sikerült menteni az adatbázisba, mentsük a fájlt is
                 String path = Paths.get(currentNote.getFilePath(), currentNote.getFilename()).toString();
                 if (!NoteController.getInstance().saveToStorage(path, noteTextArea.getText())) {
-                    Utils.showWarning("Nem sikerült a mentés");
+                    Utils.showError("A mentés nem sikerült");
                 }
                 System.out.println(currentNote);
             } else {
-                Utils.showWarning("A mentés nem sikerült");
+                Utils.showError("A mentés nem sikerült");
             }
         } else {
             // új jegyzetet kezdtünk, így kell neki nevet és helyet találni
@@ -99,10 +99,28 @@ public class MainWindowController implements Initializable {
         File selectedFile = chooser.showOpenDialog(App.getMainStage());
         // beolvassuk a fájlt
         if (selectedFile != null) {
-            noteTextArea.setText(NoteController.getInstance().open(selectedFile));
-            // létrehozunk egy Note objektumot, amit majd a mentésnél használhatunk
             Path path = Paths.get(selectedFile.getAbsolutePath());
-            NoteController.getInstance().setCurrentNote(new Note(selectedFile.getName(), path.getParent().toString()));
+            String fileName = selectedFile.getName();
+            // ellenőrizzűk, szövegfájl-e
+            if (NoteController.getInstance().verifyIfText(path)) {
+                // ellenőrizzük, hogy támogatott-e, tehát md vagy txt
+                int extensionFrom = fileName.lastIndexOf(".") + 1;
+                String extension = fileName.substring(extensionFrom);
+                if (!
+                    (extension.equalsIgnoreCase("md") ||
+                     extension.equalsIgnoreCase("txt") )
+                ) {
+                    Utils.showWarning("A fájl nem .md vagy .txt kiterjesztésű");
+                }
+                noteTextArea.setText(NoteController.getInstance().open(selectedFile));
+            } else {
+                Utils.showError("A fájl nem szövegfájl");
+                return;
+            }
+            // létrehozzuk az új currentNote-ot
+            Note currentNote = new Note(fileName, path.getParent().toString());
+            NoteController.getInstance().setCurrentNote(currentNote);
+            NoteController.getInstance().save(currentNote);
         } else {
             Utils.showWarning("Nem választott fájlt");
         }

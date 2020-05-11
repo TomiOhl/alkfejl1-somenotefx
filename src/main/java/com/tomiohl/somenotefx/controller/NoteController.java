@@ -5,6 +5,7 @@ import com.tomiohl.somenotefx.dao.NoteDaoImpl;
 import com.tomiohl.somenotefx.model.Note;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 
 public class NoteController {
@@ -32,6 +33,10 @@ public class NoteController {
         return dao.deleteFromRecents(note);
     }
 
+    public boolean verifyIfText(Path path) {
+        return dao.verifyIfText(path);
+    }
+
     public String open(File file) {
         return dao.open(file);
     }
@@ -55,4 +60,5 @@ public class NoteController {
     public void setCurrentNote(Note currentNote) {
         this.currentNote = currentNote;
     }
+
 }

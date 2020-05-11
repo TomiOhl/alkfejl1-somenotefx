@@ -4,6 +4,8 @@ import com.tomiohl.somenotefx.model.Note;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +75,17 @@ public class NoteDaoImpl implements NoteDAO {
     }
 
     @Override
+    public boolean verifyIfText(Path path) {
+        try {
+            if (Files.probeContentType(path).contains("text"))
+                return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
     public String open(File file) {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             StringBuilder builder = new StringBuilder();
@@ -105,12 +118,18 @@ public class NoteDaoImpl implements NoteDAO {
                 // nincs note az adatbazisban, insert
                 return add(note);
             } else {
-                // van ilyen note, update savedate
-                PreparedStatement upDate = conn.prepareStatement(SAVE_EXISTING);
-                upDate.setLong(1, note.getSaveDate());
-                upDate.setInt(2, id);
-                int res = upDate.executeUpdate();
-                if (res == 1) {
+                // van ilyen note, update savedate, ha az nem 0
+                // akkor 0, ha a fájlt nem recentsből nyitottuk meg
+                long saveDate = note.getSaveDate();
+                if (saveDate != 0) {
+                    PreparedStatement upDate = conn.prepareStatement(SAVE_EXISTING);
+                    upDate.setLong(1, note.getSaveDate());
+                    upDate.setInt(2, id);
+                    int res = upDate.executeUpdate();
+                    if (res == 1) {
+                        return true;
+                    }
+                } else {
                     return true;
                 }
             }
