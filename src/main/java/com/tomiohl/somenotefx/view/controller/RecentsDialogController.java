@@ -3,7 +3,7 @@ package com.tomiohl.somenotefx.view.controller;
 import com.tomiohl.somenotefx.App;
 import com.tomiohl.somenotefx.model.Note;
 import com.tomiohl.somenotefx.controller.NoteController;
-import com.tomiohl.somenotefx.utils.Utils;
+import com.tomiohl.somenotefx.utils.DialogUtils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -88,7 +88,7 @@ public class RecentsDialogController implements Initializable {
                             boolean success = NoteController.getInstance().deleteFromRecents(n);
                             refreshTable();
                             if (!success)
-                                Utils.showError("Az eltávolítás nem sikerült");
+                                DialogUtils.showError("Az eltávolítás nem sikerült");
                         }
                     });
                 });

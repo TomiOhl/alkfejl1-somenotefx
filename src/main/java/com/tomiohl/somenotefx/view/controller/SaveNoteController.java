@@ -2,7 +2,7 @@ package com.tomiohl.somenotefx.view.controller;
 
 import com.tomiohl.somenotefx.App;
 import com.tomiohl.somenotefx.model.Note;
-import com.tomiohl.somenotefx.utils.Utils;
+import com.tomiohl.somenotefx.utils.DialogUtils;
 import com.tomiohl.somenotefx.controller.NoteController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -53,15 +53,15 @@ public class SaveNoteController implements Initializable {
             NoteController.getInstance().setCurrentNote(note);
             String path = Paths.get(chosenPath, nameField.getText()).toString();
             if (NoteController.getInstance().saveToStorage(path, noteTextArea.getText())) {
-                Utils.showSuccess("A mentés sikeres");
+                DialogUtils.showSuccess("A mentés sikeres");
                 App.getMainStage().setTitle("SomeNotesFX - " + note.getFilename());
             } else {
-                Utils.showError("A mentés nem sikerült");
+                DialogUtils.showError("A mentés nem sikerült");
             }
             Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             stage.close();
         } else {
-            Utils.showError("A mentés nem sikerült");
+            DialogUtils.showError("A mentés nem sikerült");
         }
     }
 
@@ -71,7 +71,7 @@ public class SaveNoteController implements Initializable {
         stage.close();
     }
 
-    public void chooseDirectory(ActionEvent event) {
+    public void chooseDirectory() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Válasszon egy mappát");
         File selectedDirectory = directoryChooser.showDialog(App.getMainStage());
@@ -79,7 +79,7 @@ public class SaveNoteController implements Initializable {
             chosenPath = selectedDirectory.getAbsolutePath();
             selectedDirLabel.setText(chosenPath);
         } else {
-            Utils.showWarning("Nem választott mappát");
+            DialogUtils.showWarning("Nem választott mappát");
         }
     }
 

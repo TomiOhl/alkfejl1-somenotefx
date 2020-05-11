@@ -3,8 +3,9 @@ package com.tomiohl.somenotefx.view.controller;
 import com.tomiohl.somenotefx.App;
 import com.tomiohl.somenotefx.controller.NoteController;
 import com.tomiohl.somenotefx.model.Note;
-import com.tomiohl.somenotefx.utils.Utils;
-import javafx.event.ActionEvent;
+import com.tomiohl.somenotefx.utils.ConverterUtils;
+import com.tomiohl.somenotefx.utils.DialogUtils;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -36,9 +37,9 @@ public class MainWindowController implements Initializable {
                 // sikerült menteni az adatbázisba, mentsük a fájlt is
                 String path = Paths.get(currentNote.getFilePath(), currentNote.getFilename()).toString();
                 if (!NoteController.getInstance().saveToStorage(path, noteTextArea.getText()))
-                    Utils.showError("A mentés nem sikerült");
+                    DialogUtils.showError("A mentés nem sikerült");
             } else {
-                Utils.showError("A mentés nem sikerült");
+                DialogUtils.showError("A mentés nem sikerült");
             }
         } else {
             // új jegyzetet kezdtünk, így kell neki nevet és helyet találni
@@ -83,7 +84,7 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
-    public void openFile(ActionEvent actionEvent) {
+    public void openFile() {
         // nyitunk egy choosert
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Válasszon egy szövegfájlt");
@@ -107,12 +108,12 @@ public class MainWindowController implements Initializable {
                     (extension.equalsIgnoreCase("md") ||
                      extension.equalsIgnoreCase("txt") )
                 ) {
-                    Utils.showWarning("A fájl nem .md vagy .txt kiterjesztésű");
+                    DialogUtils.showWarning("A fájl nem .md vagy .txt kiterjesztésű");
                 }
                 noteTextArea.setText(NoteController.getInstance().open(selectedFile));
                 App.getMainStage().setTitle("SomeNotesFX - " + fileName);
             } else {
-                Utils.showError("A fájl nem szövegfájl");
+                DialogUtils.showError("A fájl nem szövegfájl");
                 return;
             }
             // létrehozzuk az új currentNote-ot
@@ -120,19 +121,19 @@ public class MainWindowController implements Initializable {
             NoteController.getInstance().setCurrentNote(currentNote);
             NoteController.getInstance().save(currentNote);
         } else {
-            Utils.showWarning("Nem választott fájlt");
+            DialogUtils.showWarning("Nem választott fájlt");
         }
     }
 
     @FXML
-    public void newNote(ActionEvent actionEvent) {
+    public void newNote() {
         NoteController.getInstance().setCurrentNote(null);
         App.getMainStage().setTitle("SomeNotesFX - Névtelen");
         noteTextArea.clear();
     }
 
     @FXML
-    public void previewNote(ActionEvent actionEvent) {
+    public void previewNote() {
         saveNote(); // mivel a tárhelyről lesz beolvasva az előnézet
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/com/tomiohl/somenotefx/view/preview_window.fxml"));
@@ -145,6 +146,42 @@ public class MainWindowController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void exportToPdf() {
+        saveNote();
+        Note currentNote = NoteController.getInstance().getCurrentNote();
+        Task<String> exportTask = new Task<>() {
+            @Override
+            protected String call() {
+                String html = ConverterUtils.convertToHtml();
+                return ConverterUtils.convertToPdf(html);
+            }
+        };
+        // futás közben ezt jelezzük a címsoron
+        exportTask.setOnRunning(event ->
+                App.getMainStage().setTitle("SomeNotesFX - " + currentNote.getFilename() + " exportálása folyamatban..."));
+        // siker esetén tájékoztatás
+        exportTask.setOnSucceeded(event -> {
+            App.getMainStage().setTitle("SomeNotesFX - " + currentNote.getFilename());
+            // kérjük el a Task eredményeként kapot stringet
+            final String pdfFile = (String) event.getSource().getValue();
+            if (pdfFile != null)
+                DialogUtils.showSuccess("A fájl sikeresen exportálva. Megtalálható itt: " + pdfFile);
+            else
+                DialogUtils.showError("Ismeretlen hiba. Hogy őszinte legyek, ide sose lenne szabad eljutni. Nagyon sajnálom");
+        });
+        // hiba esetén error dialog
+        exportTask.setOnFailed(event -> {
+            App.getMainStage().setTitle("SomeNotesFX - " + currentNote.getFilename());
+            Exception e = (Exception) event.getSource().getException();
+            // ha nullpointer volt, akkor valószínűleg simán csak üres volt a fájlunk
+            if (e instanceof NullPointerException)
+                DialogUtils.showWarning("Először jegyzeteljen valamit, utána exportálja");
+            else
+                DialogUtils.showError("Hiba történt: " + e.toString());
+        });
+        new Thread(exportTask).start();    // külön szálon végezzük
     }
 
     public MainWindowController() {

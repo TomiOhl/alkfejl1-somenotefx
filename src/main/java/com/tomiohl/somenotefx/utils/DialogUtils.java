@@ -2,7 +2,8 @@ package com.tomiohl.somenotefx.utils;
 
 import javafx.scene.control.Alert;
 
-public class Utils {
+public class DialogUtils {
+
     public static void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Hiba");
@@ -26,4 +27,5 @@ public class Utils {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
 }

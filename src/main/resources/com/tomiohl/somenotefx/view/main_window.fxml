@@ -18,6 +18,7 @@
         <Menu mnemonicParsing="false" text="Mentés">
             <MenuItem mnemonicParsing="false" onAction="#saveNote" text="Mentés"/>
             <MenuItem mnemonicParsing="false" onAction="#saveNoteAs" text="Mentés másként..."/>
+            <MenuItem mnemonicParsing="false" onAction="#exportToPdf" text="Exportálás PDF-be"/>
         </Menu>
     </MenuBar>
     <TextArea fx:id="noteTextArea" layoutY="32.0" prefHeight="568.0" prefWidth="800.0"/>

@@ -1,10 +1,6 @@
 package com.tomiohl.somenotefx.view.controller;
 
-import com.tomiohl.somenotefx.controller.NoteController;
-import com.tomiohl.somenotefx.model.Note;
-import com.vladsch.flexmark.html.HtmlRenderer;
-import com.vladsch.flexmark.parser.Parser;
-import com.vladsch.flexmark.util.data.MutableDataSet;
+import com.tomiohl.somenotefx.utils.ConverterUtils;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,9 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.web.*;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.net.URL;
-import java.nio.file.Path;
 import java.util.ResourceBundle;
 
 public class PreviewWindowController implements Initializable {
@@ -44,26 +38,17 @@ public class PreviewWindowController implements Initializable {
         Task<String> loadPreview = new Task<>() {
             @Override
             protected String call() {
-                MutableDataSet options = new MutableDataSet();
-                options.set(HtmlRenderer.SOFT_BREAK, "<br />\n");   // convert soft-breaks to hard breaks
-                Parser parser = Parser.builder(options).build();
-                HtmlRenderer renderer = HtmlRenderer.builder(options).build();
-                Note currentNote = NoteController.getInstance().getCurrentNote();
-                File selectedFile = new File(Path.of(currentNote.getFilePath(), currentNote.getFilename()).toString());
-                com.vladsch.flexmark.util.ast.Node document = parser.parse(NoteController.getInstance().open(selectedFile));
-                return renderer.render(document);
+                return ConverterUtils.convertToHtml();
             }
         };
-
         // siker esetén jelenítsük meg a tartalmat
         loadPreview.setOnSucceeded(event -> {
-            // Get the string returned by the task body.
+            // kérjük el a Task eredményeként kapot Stringet
             final String document = (String) event.getSource().getValue();
             if (document != null) {
                 webEngine.loadContent(document, "text/html");
             }
         });
-
         // hiba esetén írjuk ki a hibát
         loadPreview.setOnFailed(event -> {
             Exception e = (Exception) event.getSource().getException();
@@ -73,7 +58,6 @@ public class PreviewWindowController implements Initializable {
             else
                 webEngine.loadContent(e.toString(), "text/plain");
         });
-
         return loadPreview;
     }
 
