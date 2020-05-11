@@ -73,21 +73,22 @@ public class RecentsDialogController implements Initializable {
 
         actionsCol.setCellFactory(param -> new TableCell<>() {
 
-            Button deleteButton = new Button("Törlés");
+            Button deleteButton = new Button("Eltávolítás");
 
             {   //init blokk
                 deleteButton.setOnAction(event -> {
                     Note n = param.getTableView().getItems().get(getIndex());
 
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Biztosan törli ezt az előzmények közül: "
-                            + n.getFilename() + "?", ButtonType.YES, ButtonType.NO);
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                            "Biztosan eltávolítja ezt az előzmények közül: " + n.getFilename() + "?",
+                            ButtonType.YES, ButtonType.NO);
                     Optional<ButtonType> result = alert.showAndWait();
                     result.ifPresent(buttonType -> {
                         if (buttonType == ButtonType.YES) {
                             boolean success = NoteController.getInstance().deleteFromRecents(n);
                             refreshTable();
                             if (!success)
-                                Utils.showError("A törlés nem sikerült");
+                                Utils.showError("Az eltávolítás nem sikerült");
                         }
                     });
                 });

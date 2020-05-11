@@ -38,7 +38,6 @@ public class MainWindowController implements Initializable {
                 if (!NoteController.getInstance().saveToStorage(path, noteTextArea.getText())) {
                     Utils.showError("A mentés nem sikerült");
                 }
-                System.out.println(currentNote);
             } else {
                 Utils.showError("A mentés nem sikerült");
             }
@@ -126,8 +125,8 @@ public class MainWindowController implements Initializable {
 
     @FXML
     public void newNote(ActionEvent actionEvent) {
-        App app = new App();
-        app.start(new Stage());  // csakhogy a currentNote ugyanaz itt is, ott is
+        NoteController.getInstance().setCurrentNote(null);
+        noteTextArea.clear();
     }
 
     @FXML
