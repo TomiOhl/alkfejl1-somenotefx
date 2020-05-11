@@ -54,6 +54,7 @@ public class SaveNoteController implements Initializable {
             String path = Paths.get(chosenPath, nameField.getText()).toString();
             if (NoteController.getInstance().saveToStorage(path, noteTextArea.getText())) {
                 Utils.showSuccess("A mentés sikeres");
+                App.getMainStage().setTitle("SomeNotesFX - " + note.getFilename());
             } else {
                 Utils.showError("A mentés nem sikerült");
             }

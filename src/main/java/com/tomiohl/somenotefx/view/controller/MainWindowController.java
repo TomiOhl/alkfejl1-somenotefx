@@ -35,9 +35,8 @@ public class MainWindowController implements Initializable {
             if (NoteController.getInstance().save(currentNote)) {
                 // sikerült menteni az adatbázisba, mentsük a fájlt is
                 String path = Paths.get(currentNote.getFilePath(), currentNote.getFilename()).toString();
-                if (!NoteController.getInstance().saveToStorage(path, noteTextArea.getText())) {
+                if (!NoteController.getInstance().saveToStorage(path, noteTextArea.getText()))
                     Utils.showError("A mentés nem sikerült");
-                }
             } else {
                 Utils.showError("A mentés nem sikerült");
             }
@@ -110,6 +109,7 @@ public class MainWindowController implements Initializable {
                     Utils.showWarning("A fájl nem .md vagy .txt kiterjesztésű");
                 }
                 noteTextArea.setText(NoteController.getInstance().open(selectedFile));
+                App.getMainStage().setTitle("SomeNotesFX - " + fileName);
             } else {
                 Utils.showError("A fájl nem szövegfájl");
                 return;
@@ -126,6 +126,7 @@ public class MainWindowController implements Initializable {
     @FXML
     public void newNote(ActionEvent actionEvent) {
         NoteController.getInstance().setCurrentNote(null);
+        App.getMainStage().setTitle("SomeNotesFX - Névtelen");
         noteTextArea.clear();
     }
 

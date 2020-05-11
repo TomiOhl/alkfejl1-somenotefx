@@ -113,6 +113,7 @@ public class RecentsDialogController implements Initializable {
                 File f = new File(Path.of(note.getFilePath(), note.getFilename()).toString());
                 TextArea noteTextArea = (TextArea) App.getMainStage().getScene().lookup("#noteTextArea");
                 noteTextArea.setText(NoteController.getInstance().open(f));
+                App.getMainStage().setTitle("SomeNotesFX - " + note.getFilename());
                 // beállítjuk a currentNote-ot a választottra
                 NoteController.getInstance().setCurrentNote(note);
                 // bezárjuk az ablakot
