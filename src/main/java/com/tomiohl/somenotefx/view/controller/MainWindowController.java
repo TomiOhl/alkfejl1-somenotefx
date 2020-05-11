@@ -132,6 +132,22 @@ public class MainWindowController implements Initializable {
         app.start(new Stage());  // csakhogy a currentNote ugyanaz itt is, ott is
     }
 
+    @FXML
+    public void previewNote(ActionEvent actionEvent) {
+        Parent root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/com/tomiohl/somenotefx/view/preview_window.fxml"));
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
+            stage.setScene(scene);
+            stage.setTitle("Előnézet");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public MainWindowController() {
     }
 

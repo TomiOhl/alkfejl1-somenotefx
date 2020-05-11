@@ -13,7 +13,7 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Fájl">
             <MenuItem mnemonicParsing="false" onAction="#newNote" text="Létrehozás"/>
-            <MenuItem mnemonicParsing="false" text="Előnézet"/>
+            <MenuItem mnemonicParsing="false" onAction="#previewNote" text="Előnézet"/>
         </Menu>
         <Menu mnemonicParsing="false" text="Mentés">
             <MenuItem mnemonicParsing="false" onAction="#saveNote" text="Mentés"/>
