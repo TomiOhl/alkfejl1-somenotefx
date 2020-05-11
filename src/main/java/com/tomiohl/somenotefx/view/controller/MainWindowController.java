@@ -89,12 +89,10 @@ public class MainWindowController implements Initializable {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Válasszon egy szövegfájlt");
         // megadunk filtereket a kiterjesztésre
-        FileChooser.ExtensionFilter txtFilter = new FileChooser.ExtensionFilter("TXT-fájlok", "*.txt");
-        chooser.getExtensionFilters().add(txtFilter);
-        FileChooser.ExtensionFilter mdFilter = new FileChooser.ExtensionFilter("Markdown-fájlok", "*.md");
-        chooser.getExtensionFilters().add(mdFilter);
+        FileChooser.ExtensionFilter supportedFilter =
+                new FileChooser.ExtensionFilter(".txt, .md", "*.txt", "*.md");
         FileChooser.ExtensionFilter noFilter = new FileChooser.ExtensionFilter("Minden fájl", "*");
-        chooser.getExtensionFilters().add(noFilter);
+        chooser.getExtensionFilters().addAll(supportedFilter, noFilter);
         // választó ablak
         File selectedFile = chooser.showOpenDialog(App.getMainStage());
         // beolvassuk a fájlt
@@ -134,9 +132,9 @@ public class MainWindowController implements Initializable {
 
     @FXML
     public void previewNote(ActionEvent actionEvent) {
-        Parent root;
+        saveNote(); // mivel a tárhelyről lesz beolvasva az előnézet
         try {
-            root = FXMLLoader.load(getClass().getResource("/com/tomiohl/somenotefx/view/preview_window.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/com/tomiohl/somenotefx/view/preview_window.fxml"));
             Stage stage = new Stage();
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
