@@ -1,3 +1,6 @@
-.warning {
-    -fx-text-fill: red;
+.table-row-cell {
+    -fx-cell-size: 25px;    /*cella magassága*/
+}
+.center-left {
+    -fx-alignment: CENTER-LEFT;
 }

@@ -22,4 +22,5 @@ public interface NoteDAO {
 
     List<Note> getAll();
 
+    void deleteOldRecents();
 }

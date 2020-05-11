@@ -68,6 +68,7 @@ public class MainWindowController implements Initializable {
     public void openRecents(){
         Parent root;
         try {
+            NoteController.getInstance().deleteOldRecents();
             root = FXMLLoader.load(getClass().getResource("/com/tomiohl/somenotefx/view/recents_dialog.fxml"));
             Stage stage = new Stage();
             Scene scene = new Scene(root);

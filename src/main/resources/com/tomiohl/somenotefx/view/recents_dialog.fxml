@@ -3,17 +3,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tomiohl.somenotefx.view.controller.RecentsDialogController">
+<AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.tomiohl.somenotefx.view.controller.RecentsDialogController">
 
-    <children>
-        <TableView fx:id="table" layoutY="27.0" prefHeight="371.0" prefWidth="500.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-            <columns>
-                <TableColumn fx:id="nameCol" prefWidth="200.0" text="Fájlnév" />
-                <TableColumn fx:id="dateCol" prefWidth="190.0" text="Mentve" />
-                <TableColumn fx:id="actionsCol" prefWidth="90.0" text="Lehetőségek" />
-            </columns>
-        </TableView>
-        <Button cancelButton="true" layoutX="12.0" layoutY="384.0" minHeight="24.0" mnemonicParsing="false" onAction="#closeDialog" prefHeight="24.0" text="Bezárás" />
-    </children>
-
+    <TableView fx:id="table" minHeight="275.0" prefWidth="500.0" AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0"
+               AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="42">
+        <columns>
+            <TableColumn fx:id="nameCol" prefWidth="200.0" text="Fájlnév" styleClass="center-left"/>
+            <TableColumn fx:id="dateCol" prefWidth="190.0" text="Mentve" styleClass="center-left"/>
+            <TableColumn fx:id="actionsCol" prefWidth="90.0" text="Lehetőségek"/>
+        </columns>
+    </TableView>
+    <Button cancelButton="true" layoutX="9.0" AnchorPane.bottomAnchor="9.0" minHeight="24.0" mnemonicParsing="false"
+            onAction="#closeDialog" prefHeight="24.0" text="Bezárás"/>
 </AnchorPane>

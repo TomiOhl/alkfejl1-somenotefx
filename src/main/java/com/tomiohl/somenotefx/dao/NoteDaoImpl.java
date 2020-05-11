@@ -21,9 +21,12 @@ public class NoteDaoImpl implements NoteDAO {
 
     private static final String INSERT_RECENT = "INSERT INTO Recents (filename, filepath, savedate) VALUES (?,?,?);";
 
-    private static final String DELETE_RECENT = "DELETE FROM Recents WHERE id=?";
+    private static final String DELETE_RECENT = "DELETE FROM Recents WHERE id=?;";
 
-    private static final String SELECT_RECENT = "SELECT * FROM Recents;";
+    private static final String SELECT_RECENT = "SELECT * FROM Recents ORDER BY savedate DESC;";
+
+    private static  final String DELETE_OLD_RECENTS =
+            "DELETE FROM Recents WHERE id NOT IN (SELECT id FROM Recents ORDER BY savedate DESC LIMIT 10);";
 
     private static final String SAVE_CHECK_EXISTENCE = "SELECT id FROM Recents WHERE filename = ? AND filepath = ?;";
 
@@ -35,7 +38,6 @@ public class NoteDaoImpl implements NoteDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public NoteDaoImpl() {
@@ -55,7 +57,6 @@ public class NoteDaoImpl implements NoteDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return false;
     }
 
@@ -70,7 +71,6 @@ public class NoteDaoImpl implements NoteDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return false;
     }
 
@@ -173,5 +173,14 @@ public class NoteDaoImpl implements NoteDAO {
             e.printStackTrace();
         }
         return result;
+    }
+
+    @Override
+    public void deleteOldRecents() {
+        try (Connection conn = DriverManager.getConnection(DB_STRING); PreparedStatement st = conn.prepareStatement(DELETE_OLD_RECENTS)) {
+            st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

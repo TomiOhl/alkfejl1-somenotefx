@@ -53,6 +53,10 @@ public class NoteController {
         return dao.getAll();
     }
 
+    public void deleteOldRecents() {
+        dao.deleteOldRecents();
+    }
+
     public Note getCurrentNote() {
         return currentNote;
     }
