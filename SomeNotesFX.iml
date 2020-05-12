@@ -13,16 +13,19 @@
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:13" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:linux:13" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:13" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:linux:13" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:13" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-base:13" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-base:linux:13" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:linux:13" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:mac:13" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:14-ea+8" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:linux:14-ea+8" level="project" />
     <orderEntry type="library" name="Maven: org.xerial:sqlite-jdbc:3.30.1" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-web:15-ea+4" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-web:linux:15-ea+4" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-web:win:15-ea+4" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-media:15-ea+4" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-media:linux:15-ea+4" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-web:linux:15-ea+4" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-web:mac:15-ea+4" level="project" />
     <orderEntry type="library" name="Maven: com.vladsch.flexmark:flexmark-all:0.61.26" level="project" />
     <orderEntry type="library" name="Maven: com.vladsch.flexmark:flexmark:0.61.26" level="project" />
     <orderEntry type="library" name="Maven: com.vladsch.flexmark:flexmark-ext-abbreviation:0.61.26" level="project" />
