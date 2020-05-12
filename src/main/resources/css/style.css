@@ -52,4 +52,27 @@
     -fx-background-insets: 0, 0 0 1 0;
 }
 
-/* TODO: gombok */
+/* gombok */
+.button {
+    -fx-text-fill: white;
+    -fx-background-color: -fx-accent;
+    -fx-background-radius: 30;
+    -fx-pref-height: 24px;
+}
+.button:hover {
+    -fx-background-color: royalblue;
+    -fx-scale-x: 1.1;   /* a scale-ekkel nagyobbbítom őket */
+    -fx-scale-y: 1.1;
+}
+.cancel-button {
+    -fx-background-color: darkgray;
+}
+.cancel-button:hover {
+    -fx-background-color: firebrick;
+}
+.save-button {
+    -fx-background-color: forestgreen;
+}
+.save-button:hover {
+    -fx-background-color: darkgreen;
+}

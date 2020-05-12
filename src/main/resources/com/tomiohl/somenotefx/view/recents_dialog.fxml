@@ -16,5 +16,5 @@
         </columns>
     </TableView>
     <Button cancelButton="true" layoutX="9.0" AnchorPane.bottomAnchor="9.0" minHeight="24.0" mnemonicParsing="false"
-            onAction="#closeDialog" prefHeight="24.0" text="Bezárás"/>
+            onAction="#closeDialog" prefHeight="24.0" text="Bezárás" styleClass="cancel-button"/>
 </AnchorPane>

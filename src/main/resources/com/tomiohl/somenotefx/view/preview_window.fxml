@@ -9,5 +9,5 @@
             fx:controller="com.tomiohl.somenotefx.view.controller.PreviewWindowController">
     <WebView fx:id="preview" layoutX="12.0" layoutY="12.0" prefHeight="540.0" prefWidth="776.0"/>
     <Button cancelButton="true" layoutX="12.0" layoutY="564.0" minHeight="24.0" mnemonicParsing="false"
-            onAction="#closeDialog" prefHeight="24.0" text="Bezárás"/>
+            onAction="#closeDialog" prefHeight="24.0" text="Bezárás" styleClass="cancel-button"/>
 </AnchorPane>
