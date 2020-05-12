@@ -1,6 +1,55 @@
-.table-row-cell {
-    -fx-cell-size: 25px;    /*cella magassága*/
-}
+/* általános */
 .center-left {
     -fx-alignment: CENTER-LEFT;
 }
+.root {
+    -fx-background-color: white;
+}
+
+/* menubar */
+.menu-bar,
+.menu,
+.menu-item:hover,
+.menu-item:focused {
+    -fx-background-color: transparent;
+}
+.menu-button:showing > .label,
+.menu-button:hover > .label,
+.menu-item:hover .label,
+.menu-item:focused .label {
+    -fx-text-fill: -fx-accent;
+}
+
+/* textarea, avagy a jegyzetelő */
+.text-area {
+    -fx-border-color: Gainsboro;
+    -fx-faint-focus-color: whitesmoke;
+}
+.text-area:focused {
+    -fx-focus-color: whitesmoke;
+}
+
+/* recents tábla */
+.table-view .column-header-background {
+    -fx-background-color: white;
+}
+.table-view,
+.table-view:focused,
+.table-view .column-header-background .label,
+.table-view .column-header,
+.table-view .filler {
+    -fx-background-color: transparent;
+}
+.table-row-cell {
+    -fx-cell-size: 25px;    /* cella magassága */
+    -fx-table-cell-border-color: transparent;
+}
+.table-row-cell:hover {
+    -fx-text-background-color: -fx-accent;
+}
+.table-view:focused .table-row-cell:focused {   /* nem lesz az első sor bekeretezve */
+    -fx-background-color: -fx-table-cell-border-color, -fx-background;
+    -fx-background-insets: 0, 0 0 1 0;
+}
+
+/* TODO: gombok */

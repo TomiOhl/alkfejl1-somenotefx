@@ -26,6 +26,7 @@ public class App extends Application {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/com/tomiohl/somenotefx/view/main_window.fxml"));
             Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
             stage.setScene(scene);
             stage.setTitle("SomeNotesFX - Névtelen");
             stage.show();
